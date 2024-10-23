@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:fragment="baseHeader(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}"></title>
+
+    <link rel="stylesheet" type="text/css" href="/css/library.css" />
+</head>
+<body>
+
+<div th:fragment="navbar">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/book/overview}">Books</a>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="footer">
+    <footer><p class="text-center text text-muted">Copyright Vincent Velthuizen &copy;2024</p></footer>
+</div>
+
+<div th:fragment="bottomScripts">
+
+</div>
+
+</body>
+</html>
