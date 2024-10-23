@@ -44,22 +44,4 @@ public class CopyController {
 
         return "redirect:/";
     }
-
-    @GetMapping("/copy/form")
-    private String showCopyForm(Model datamodel) {
-        datamodel.addAttribute("newCopy", new Copy());
-        datamodel.addAttribute("allBooks", bookRepository.findAll());
-
-        return "copyForm";
-    }
-
-    @PostMapping("/copy/form")
-    private String saveOrUpdateCopy(@ModelAttribute("newCopy") Copy copyToBeSaved, BindingResult result) {
-        if (result.hasErrors()) {
-            return "redirect:/copy/form";
-        }
-
-        copyRepository.save(copyToBeSaved);
-        return "redirect:/";
-    }
 }
