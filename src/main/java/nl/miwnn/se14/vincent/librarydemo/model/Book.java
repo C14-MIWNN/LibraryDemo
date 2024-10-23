@@ -1,9 +1,6 @@
 package nl.miwnn.se14.vincent.librarydemo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -15,6 +12,7 @@ import java.util.List;
 public class Book {
     @Id @GeneratedValue
     private Long bookId;
+    @Column(unique = true)
     private String title;
     private String author;
 
