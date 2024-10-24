@@ -10,26 +10,37 @@
 <div class="container">
     <h1>Create a new book</h1>
 
-    <form th:action="@{/book/new}" method="post" th:object="${newBook}">
-        <table>
-            <tr>
-                <td>Title</td>
-                <td><input type="text" th:field="*{title}"/></td>
-            </tr>
-            <tr>
-                <td>Author</td>
-                <td>
-                    <select th:field="*{authors}" multiple>
-                        <option th:each="authorOption : ${allAuthors}"
-                                th:text="${authorOption.name}"
-                                th:value="${authorOption.authorId}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-
-        <input type="submit" value="Save book" />
+    <form class="row g-3" th:action="@{/book/new}" method="post" th:object="${newBook}">
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="title" class="col-form-label">Title</label>
+            </div>
+            <div class="col-5">
+                <input type="text" id="title" class="form-control" aria-describedby="titleelpInline">
+            </div>
+            <div class="col-6">
+                <span id="titleHelpInline" class="form-text">
+                </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="authors" class="col-form-label">Authors</label>
+            </div>
+            <div class="col-5">
+                <select id="authors" class="form-select" aria-describedby="authorHelpInline" th:field="*{authors}" multiple>
+                    <option th:each="authorOption : ${allAuthors}"
+                            th:text="${authorOption.name}"
+                            th:value="${authorOption.authorId}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-6">
+                <span id="authorHelpInline" class="form-text">
+                </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Save book</button>
     </form>
 </div>
 
