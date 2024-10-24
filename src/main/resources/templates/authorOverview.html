@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
+    <title>authorOverview.html</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+
+    <form th:action="@{/author/new}" method="post" th:object="${newAuthor}">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+            <tr th:each="author : ${allAuthors}">
+                <td th:text="${author.name}"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text" th:field="*{name}" /></td>
+                <td><input type="submit" value="save author" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+</body>
+</html>

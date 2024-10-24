@@ -2,7 +2,7 @@ package nl.miwnn.se14.vincent.librarydemo.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Vincent Velthuizen
@@ -14,10 +14,22 @@ public class Book {
     private Long bookId;
     @Column(unique = true)
     private String title;
-    private String author;
 
     @OneToMany(mappedBy = "book")
-    private List<Copy> copies;
+    private Set<Copy> copies;
+
+    @ManyToMany
+    private Set<Author> authors;
+
+    public String getAuthorString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Author author : authors) {
+            stringBuilder.append(author.getName()).append(" ");
+        }
+
+        return stringBuilder.toString();
+    }
 
     public int getNumberOfAvailableCopies() {
         int count = 0;
@@ -51,11 +63,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Set<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 }

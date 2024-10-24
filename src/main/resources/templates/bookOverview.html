@@ -20,7 +20,7 @@
         </tr>
         <tr th:each="book : ${allBooks}">
             <td th:text="${book.title}"></td>
-            <td th:text="${book.author}"></td>
+            <td th:text="${book.authorString}"></td>
             <td>
                 <span th:text="${book.numberOfAvailableCopies}"></span>/<span th:text="${book.numberOfCopies}"></span>
             </td>

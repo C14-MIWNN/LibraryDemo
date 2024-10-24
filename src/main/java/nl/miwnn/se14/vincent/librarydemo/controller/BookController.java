@@ -1,6 +1,7 @@
 package nl.miwnn.se14.vincent.librarydemo.controller;
 
 import nl.miwnn.se14.vincent.librarydemo.model.Book;
+import nl.miwnn.se14.vincent.librarydemo.repositories.AuthorRepository;
 import nl.miwnn.se14.vincent.librarydemo.repositories.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class BookController {
+    private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(AuthorRepository authorRepository, BookRepository bookRepository) {
+        this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
     }
 
@@ -32,6 +35,7 @@ public class BookController {
     @GetMapping("/book/new")
     private String showBookForm(Model datamodel) {
         datamodel.addAttribute("newBook", new Book());
+        datamodel.addAttribute("allAuthors", authorRepository.findAll());
 
         return "bookForm";
     }
