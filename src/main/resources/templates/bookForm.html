@@ -10,13 +10,14 @@
 <div class="container">
     <h1>Create a new book</h1>
 
-    <form class="row g-3" th:action="@{/book/new}" method="post" th:object="${newBook}">
+    <form class="row g-3" th:action="@{/book/new}" method="post" th:object="${formBook}">
+        <input type="hidden" th:field="*{bookId}">
         <div class="row g-3 align-items-center">
             <div class="col-1">
                 <label for="title" class="col-form-label">Title</label>
             </div>
             <div class="col-5">
-                <input type="text" id="title" class="form-control" aria-describedby="titleelpInline">
+                <input type="text" id="title" class="form-control" aria-describedby="titleHelpInline" th:field="*{title}">
             </div>
             <div class="col-6">
                 <span id="titleHelpInline" class="form-text">

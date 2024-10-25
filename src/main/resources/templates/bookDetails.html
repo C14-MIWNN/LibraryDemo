@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
+    <title th:text="|Details for book: ${book.title}|"></title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+    <h1>Detail for book: <span th:text="${book.title}"></span></h1>
+
+    <h2>Authors</h2>
+    <ul>
+        <li th:each="author : ${book.authors}"><a th:href="@{/author/detail/{authorName}(authorName = ${author.name})}" th:text="${author.name}"></a></li>
+    </ul>
+
+    <h2>Actions</h2>
+    <ul>
+        <li><a th:href="@{/book/edit/{bookTitle}(bookTitle = ${book.title})}">Edit book</a></li>
+        <li><a th:href="@{/book/delete/{bookTitle}(bookTitle = ${book.title})}">Delete book</a></li>
+        <li><a th:href="@{/copy/new/{bookTitle}(bookTitle = ${book.title})}">Buy copy</a></li>
+    </ul>
+
+    <h2>Copies</h2>
+    <table>
+        <tr th:each="copy : ${book.copies}">
+            <td th:text="${copy.copyId}"></td>
+            <td th:if="${copy.available}">
+                <a th:href="@{/copy/borrow/{copyId}(copyId=${copy.copyId})}">Borrow</a>
+            </td>
+            <td th:unless="${copy.available}">
+                <a th:href="@{/copy/return/{copyId}(copyId=${copy.copyId})}">Return</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+</body>
+</html>

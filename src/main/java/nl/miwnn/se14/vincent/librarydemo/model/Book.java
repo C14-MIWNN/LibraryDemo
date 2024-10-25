@@ -70,4 +70,12 @@ public class Book {
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
+
+    public Set<Copy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(Set<Copy> copies) {
+        this.copies = copies;
+    }
 }
