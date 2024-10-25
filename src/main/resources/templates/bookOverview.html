@@ -15,8 +15,6 @@
             <th>Title</th>
             <th>Author</th>
             <th>Available</th>
-            <th></th><!-- Buy -->
-            <th></th><!-- Delete -->
         </tr>
         <tr th:each="book : ${allBooks}">
             <td><a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}" th:text="${book.title}"></a></td>
@@ -24,8 +22,6 @@
             <td>
                 <span th:text="${book.numberOfAvailableCopies}"></span>/<span th:text="${book.numberOfCopies}"></span>
             </td>
-            <td><a th:href="@{/copy/new/{bookId}(bookId = ${book.bookId})}">buy</a></td>
-            <td><a th:href="@{/book/delete/{bookId}(bookId = ${book.bookId})}">delete</a></td>
         </tr>
     </table>
 

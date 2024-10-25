@@ -10,7 +10,7 @@
 <div class="container">
     <h1>Create a new book</h1>
 
-    <form class="row g-3" th:action="@{/book/new}" method="post" th:object="${formBook}">
+    <form class="row g-3" th:action="@{/book/save}" method="post" th:object="${formBook}">
         <input type="hidden" th:field="*{bookId}">
         <div class="row g-3 align-items-center">
             <div class="col-1">
@@ -20,7 +20,7 @@
                 <input type="text" id="title" class="form-control" aria-describedby="titleHelpInline" th:field="*{title}">
             </div>
             <div class="col-6">
-                <span id="titleHelpInline" class="form-text">
+                <span id="titleHelpInline" class="form-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
                 </span>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </select>
             </div>
             <div class="col-6">
-                <span id="authorHelpInline" class="form-text">
+                <span id="authorHelpInline" class="form-text" th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}">
                 </span>
             </div>
         </div>

@@ -29,12 +29,12 @@ public class CopyController {
         this.copyRepository = copyRepository;
     }
 
-    @GetMapping("/copy/new/{bookId}")
-    private String createNewCopy(@PathVariable("bookId") Long bookId) {
-        Optional<Book> bookOptional = bookRepository.findById(bookId);
+    @GetMapping("/copy/new/{bookTitle}")
+    private String createNewCopy(@PathVariable("bookTitle") String title) {
+        Optional<Book> bookOptional = bookRepository.findByTitle(title);
 
         if (bookOptional.isEmpty()) {
-            System.err.printf("Could not retrieve book with ID: %d\n", bookId);
+            System.err.printf("Could not retrieve book with title: %s\n", title);
             return "redirect:/";
         }
 

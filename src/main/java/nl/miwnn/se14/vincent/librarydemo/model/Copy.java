@@ -1,9 +1,6 @@
 package nl.miwnn.se14.vincent.librarydemo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 /**
  * @author Vincent Velthuizen

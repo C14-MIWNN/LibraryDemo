@@ -1,6 +1,8 @@
 package nl.miwnn.se14.vincent.librarydemo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Set;
 
@@ -12,12 +14,15 @@ import java.util.Set;
 public class Book {
     @Id @GeneratedValue
     private Long bookId;
+
+    @NotBlank
     @Column(unique = true)
     private String title;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<Copy> copies;
 
+    @NotEmpty
     @ManyToMany
     private Set<Author> authors;
 

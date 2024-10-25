@@ -1,11 +1,14 @@
 package nl.miwnn.se14.vincent.librarydemo.controller;
 
+import jakarta.validation.Valid;
 import nl.miwnn.se14.vincent.librarydemo.model.Book;
 import nl.miwnn.se14.vincent.librarydemo.repositories.AuthorRepository;
 import nl.miwnn.se14.vincent.librarydemo.repositories.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,20 +72,25 @@ public class BookController {
         return "bookForm";
     }
 
-    @PostMapping("/book/new")
-    private String saveOrUpdateBook(@ModelAttribute("formBook") Book bookToBeSaved, BindingResult result) {
+    @PostMapping("/book/save")
+    private String saveBook(@ModelAttribute("formBook") @Valid Book bookToBeSaved, BindingResult result, Model datamodel) {
+        Optional<Book> sameName = bookRepository.findByTitle(bookToBeSaved.getTitle());
+        if (sameName.isPresent() && !sameName.get().getBookId().equals(bookToBeSaved.getBookId())) {
+            result.addError(new FieldError("formBook", "title", "this title is already in use"));
+        }
+
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
-            return "redirect:/book/overview";
+            return setupBookForm(datamodel, bookToBeSaved);
         }
 
         bookRepository.save(bookToBeSaved);
-        return "redirect:/book/overview";
+        return "redirect:/book/detail/" + bookToBeSaved.getTitle();
     }
 
-    @GetMapping("/book/delete/{bookId}")
-    private String deleteBook(@PathVariable("bookId") Long bookId) {
-        bookRepository.deleteById(bookId);
+    @GetMapping("/book/delete/{bookTitle}")
+    private String deleteBook(@PathVariable("bookTitle") String title) {
+        bookRepository.findByTitle(title).ifPresent(bookRepository::delete);
         return "redirect:/book/overview";
     }
 }
