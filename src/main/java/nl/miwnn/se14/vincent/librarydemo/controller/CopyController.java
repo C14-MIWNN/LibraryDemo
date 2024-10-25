@@ -30,18 +30,45 @@ public class CopyController {
     }
 
     @GetMapping("/copy/new/{bookTitle}")
-    private String createNewCopy(@PathVariable("bookTitle") String title) {
-        Optional<Book> bookOptional = bookRepository.findByTitle(title);
+    private String createNewCopy(@PathVariable("bookTitle") String bookTitle) {
+        Optional<Book> optionalBook = bookRepository.findByTitle(bookTitle);
 
-        if (bookOptional.isEmpty()) {
-            System.err.printf("Could not retrieve book with title: %s\n", title);
+        if (optionalBook.isEmpty()) {
             return "redirect:/";
         }
 
         Copy copy = new Copy();
-        copy.setBook(bookOptional.get());
+        copy.setBook(optionalBook.get());
         copyRepository.save(copy);
 
-        return "redirect:/";
+        return redirectToBookDetailPage(copy);
+    }
+
+    private static String redirectToBookDetailPage(Copy copy) {
+        return String.format("redirect:/book/detail/%s", copy.getBook().getTitle());
+    }
+
+    @GetMapping("/copy/borrow/{copyId}")
+    private String makeCopyUnavailable(@PathVariable("copyId") Long copyId) {
+        return setAvailabilityAndRedirectToBook(copyId, false);
+    }
+
+    @GetMapping("/copy/return/{copyId}")
+    private String makeCopyAvailable(@PathVariable("copyId") Long copyId) {
+        return setAvailabilityAndRedirectToBook(copyId, true);
+    }
+
+    private String setAvailabilityAndRedirectToBook(Long copyId, boolean available) {
+        Optional<Copy> optionalCopy = copyRepository.findById(copyId);
+
+        if (optionalCopy.isEmpty()) {
+            return "redirect:/book/overview";
+        }
+
+        Copy copy = optionalCopy.get();
+        copy.setAvailable(available);
+        copyRepository.save(copy);
+
+        return redirectToBookDetailPage(copy);
     }
 }
