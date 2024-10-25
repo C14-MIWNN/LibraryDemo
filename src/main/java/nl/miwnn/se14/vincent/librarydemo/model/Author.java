@@ -1,9 +1,10 @@
 package nl.miwnn.se14.vincent.librarydemo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Set;
 
 /**
  * @author Vincent Velthuizen
@@ -15,7 +16,13 @@ public class Author {
 
     @Id @GeneratedValue
     private Long authorId;
+
+    @NotBlank
+    @Column(unique = true)
     private String name;
+
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;
 
     public Long getAuthorId() {
         return authorId;
@@ -31,5 +38,13 @@ public class Author {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }

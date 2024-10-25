@@ -11,6 +11,7 @@
     <h1>Detail for book: <span th:text="${book.title}"></span></h1>
 
     <h2>Authors</h2>
+    <!--  TODO: Show auhtors as cards -->
     <ul>
         <li th:each="author : ${book.authors}"><a th:href="@{/author/detail/{authorName}(authorName = ${author.name})}" th:text="${author.name}"></a></li>
     </ul>
@@ -23,6 +24,7 @@
     </ul>
 
     <h2>Copies</h2>
+    <!--  TODO: Show copies as cards -->
     <table>
         <tr th:each="copy : ${book.copies}">
             <td th:text="${copy.copyId}"></td>

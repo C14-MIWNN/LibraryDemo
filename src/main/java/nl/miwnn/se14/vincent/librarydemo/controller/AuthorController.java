@@ -5,10 +5,9 @@ import nl.miwnn.se14.vincent.librarydemo.repositories.AuthorRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author Vincent Velthuizen
@@ -40,5 +39,18 @@ public class AuthorController {
 
         authorRepository.save(author);
         return "redirect:/author/overview";
+    }
+
+    @GetMapping("/detail/{authorName}")
+    private String showAuthorDetailPage(@PathVariable("authorName") String authorName, Model model) {
+        Optional<Author> author = authorRepository.findAuthorByName(authorName);
+
+        if (author.isEmpty()) {
+            return "redirect:/author";
+        }
+
+        model.addAttribute("authorToBeShown", author.get());
+
+        return "authorDetail";
     }
 }
