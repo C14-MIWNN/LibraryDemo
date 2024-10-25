@@ -10,7 +10,7 @@
 <div class="container">
     <h1>Overview of all Authors</h1>
 
-    <form th:action="@{/author/new}" method="post" th:object="${newAuthor}">
+    <form th:action="@{/author/save}" method="post" th:object="${formAuthor}">
         <table class="table table-striped">
             <tr>
                 <th><label for="newAuthorName">Name</label></th>

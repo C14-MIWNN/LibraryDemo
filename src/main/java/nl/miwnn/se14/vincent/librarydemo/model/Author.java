@@ -21,7 +21,7 @@ public class Author {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL) // Cancelling an author means cancelling all of their books?
     private Set<Book> books;
 
     public Long getAuthorId() {

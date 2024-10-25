@@ -17,6 +17,10 @@
     </ul>
 
     <h2>Actions</h2>
+    <ul>
+        <li><a th:href="@{/author/edit/{authorName}(authorName = ${authorToBeShown.name})}">Edit author</a></li>
+        <li><a th:href="@{/author/delete/{authorName}(authorName = ${authorToBeShown.name})}">Delete author</a></li>
+    </ul>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
