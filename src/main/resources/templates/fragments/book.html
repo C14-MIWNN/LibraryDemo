@@ -13,12 +13,21 @@
     </div>
 
     <div th:fragment="bookCard(book)" class="col">
-        <a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}" >
             <div class="card h-100">
-                <img height="300px" th:src="${book.imageUrl}" class="card-img-top object-fit-cover" th:alt="|Cover for ${book.title}|">
-
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${book.title}"></h5>
+                <a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}">
+                    <img height="300px" th:src="${book.imageUrl}" class="card-img-top object-fit-cover" th:alt="|Cover for ${book.title}|">
+                </a>
+                <div class="card-header">
+                    <a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}">
+                        <h5 class="card-title" th:text="${book.title}"></h5>
+                    </a>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="author : ${book.authors}">
+                        <a th:href="@{/author/detail/{authorName}(authorName = ${author.name})}" th:text="${author.name}"></a>
+                    </li>
+                </ul>
+                <div class="card-body" style="">
                     <p class="card-text" th:text="${book.description}"></p>
                 </div>
                 <div class="card-footer">

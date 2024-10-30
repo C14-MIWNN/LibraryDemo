@@ -10,20 +10,7 @@
 <div class="container">
     <h1>Overview of all books in the Library</h1>
 
-    <table class="table table-striped">
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Available</th>
-        </tr>
-        <tr th:each="book : ${allBooks}">
-            <td><a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}" th:text="${book.title}"></a></td>
-            <td th:text="${book.authorString}"></td>
-            <td>
-                <span th:text="${book.numberOfAvailableCopies}"></span>/<span th:text="${book.numberOfCopies}"></span>
-            </td>
-        </tr>
-    </table>
+    <div th:replace="~{fragments/book :: bookCards(${allBooks})}"></div>
 
     <a th:href="@{/book/new}">Add a new book</a>
 </div>
