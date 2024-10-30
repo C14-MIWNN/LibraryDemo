@@ -12,9 +12,7 @@
 
     <h2>Books</h2>
     <!--  TODO: Show books as cards -->
-    <ul>
-        <li th:each="book : ${authorToBeShown.books}"><a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}" th:text="${book.title}"></a></li>
-    </ul>
+    <div th:replace="~{fragments/book :: bookCards(${authorToBeShown.books})}"></div>
 
     <h2>Actions</h2>
     <ul>

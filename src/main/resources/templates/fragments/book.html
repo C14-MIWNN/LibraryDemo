@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseHeader(~{:: title})}">
+    <title>book.html</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+    <div th:fragment="bookCards(books)" class="row row-cols-1 row-cols-md-6 g-4">
+        <div th:each="book : ${books}" th:include="~{:: bookCard(${book})}"></div>
+    </div>
+
+    <div th:fragment="bookCard(book)" class="col">
+        <a th:href="@{/book/detail/{bookTitle}(bookTitle = ${book.title})}" >
+            <div class="card h-100">
+                <img height="300px" th:src="${book.imageUrl}" class="card-img-top object-fit-cover" th:alt="|Cover for ${book.title}|">
+
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${book.title}"></h5>
+                    <p class="card-text" th:text="${book.description}"></p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-body-secondary" th:text="|${book.numberOfAvailableCopies} available out of ${book.numberOfCopies}|"></small>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+</body>
+</html>
