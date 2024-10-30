@@ -26,6 +26,30 @@
         </div>
         <div class="row g-3 align-items-center">
             <div class="col-1">
+                <label for="description" class="col-form-label">Description</label>
+            </div>
+            <div class="col-5">
+                <textarea id="description" class="form-control" aria-describedby="descriptionHelpInline" th:field="*{description}"></textarea>
+            </div>
+            <div class="col-6">
+                <span id="descriptionHelpInline" class="form-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
+                <label for="imageUrl" class="col-form-label">Image URL</label>
+            </div>
+            <div class="col-5">
+                <input type="url" id="imageUrl" class="form-control" aria-describedby="imageUrlHelpInline" th:field="*{imageUrl}">
+            </div>
+            <div class="col-6">
+                <span id="imageUrlHelpInline" class="form-text" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">
+                </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-1">
                 <label for="authors" class="col-form-label">Authors</label>
             </div>
             <div class="col-5">

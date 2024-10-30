@@ -19,6 +19,11 @@ public class Book {
     @Column(unique = true)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    private String imageUrl;
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<Copy> copies;
 
@@ -82,5 +87,21 @@ public class Book {
 
     public void setCopies(Set<Copy> copies) {
         this.copies = copies;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
