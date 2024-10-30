@@ -32,7 +32,7 @@ public class InitializeController {
     }
 
     @EventListener
-    private void seed(ContextRefreshedEvent event) {
+    private void seed(ContextRefreshedEvent ignoredEvent) {
         if (authorRepository.findAll().isEmpty()) {
             initializeDB();
         }
@@ -68,11 +68,12 @@ public class InitializeController {
         Book fear = makeBook("The Wise Man's Fear", "The Wise Man's Fear is a fantasy novel written by American author Patrick Rothfuss and the second volume in The Kingkiller Chronicle. It was published on March 1, 2011, by DAW Books. It is the sequel to 2007's The Name of the Wind.", "https://upload.wikimedia.org/wikipedia/en/7/7b/The_Wise_Man%27s_Fear.jpg", patrick);
         makeCopy(fear);
 
-        makeBook("The Doors of Stone", "Book 3 in The Kingkiller Chronicle series, titled The Doors of Stone, is coming, it is just a matter of when. \n" +
-                "\n" +
-                "Written by American author Patrick Rothfuss, the Kingkiller novels take readers on an adventure in an original fantasy world, following an adventurer and musician named Kvothe. \n" +
-                "\n" +
-                "The first two books (The Name of the Wind and The Wise Man's Fear) were released in 2007 and 2011, respectively. It has been more than a decade since the last book in the series hit store shelves.", "https://images.thedirect.com/media/photos/doors_of_stone.jpg", patrick);
+        makeBook("The Doors of Stone", """
+                Book 3 in The Kingkiller Chronicle series, titled The Doors of Stone, is coming, it is just a matter of when.\s
+                
+                Written by American author Patrick Rothfuss, the Kingkiller novels take readers on an adventure in an original fantasy world, following an adventurer and musician named Kvothe.\s
+                
+                The first two books (The Name of the Wind and The Wise Man's Fear) were released in 2007 and 2011, respectively. It has been more than a decade since the last book in the series hit store shelves.""", "https://images.thedirect.com/media/photos/doors_of_stone.jpg", patrick);
 
         Book collaboration = makeBook("The Final Name of the Rings", "A fantasy fantasy book written by three famous fantasy authors", "https://thebookcoverdesigner.com/wp-content/uploads/2015/02/fantasy_cover.bmp", tolkien, brandon, patrick);
         makeCopy(collaboration, false);
