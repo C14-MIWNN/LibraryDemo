@@ -39,9 +39,9 @@ public class InitializeController {
     }
 
     private void initializeDB() {
-        Author brandon = makeAuthor("Brandon Sanderson");
-        Author tolkien = makeAuthor("J.R.R. Tolkien");
-        Author patrick = makeAuthor("Patrick Rothfuss");
+        Author brandon = makeAuthor("Brandon Sanderson", "https://gamingbolt.com/wp-content/uploads/2021/12/Brandon-Sanderson.jpg");
+        Author tolkien = makeAuthor("J.R.R. Tolkien", "https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg");
+        Author patrick = makeAuthor("Patrick Rothfuss", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Patrick-rothfuss-2014-kyle-cassidy.jpg/500px-Patrick-rothfuss-2014-kyle-cassidy.jpg");
 
         Book hobbit = makeBook("The Hobbit", "The Hobbit, or There and Back Again is a children's fantasy novel by the English author J. R. R. Tolkien. It was published in 1937 to wide critical acclaim, being nominated for the Carnegie Medal and awarded a prize from the New York Herald Tribune for best juvenile fiction. The book is recognized as a classic in children's literature and is one of the best-selling books of all time, with over 100 million copies sold.", "https://images.thenile.io/r1000/9780261103283.jpg", tolkien);
         makeCopy(hobbit, false);
@@ -79,9 +79,10 @@ public class InitializeController {
         makeCopy(collaboration, false);
     }
 
-    private Author makeAuthor(String name) {
+    private Author makeAuthor(String name, String imageUrl) {
         Author author = new Author();
         author.setName(name);
+        author.setImageUrl(imageUrl);
         authorRepository.save(author);
         return author;
     }

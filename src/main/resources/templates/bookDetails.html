@@ -7,35 +7,38 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="container">
-    <h1>Detail for book: <span th:text="${book.title}"></span></h1>
+<div class="container my-5">
+    <div class="row p-5 g-5 m-2 align-items-center rounded-3 border shadow-lg">
+        <div class="col-4 mt-0">
+            <img class="img-fluid rounded overflow-hidden shadow-lg" th:src="${book.imageUrl}" th:alt="|Cover for ${book.title}|">
+        </div>
+        <div class="col-8 mt-0">
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-center" th:text="${book.title}"></h1>
+            <div th:replace="~{fragments/author :: authorCards(${book.authors})}"></div>
+            <p class="lead" th:text="${book.description}"></p>
+            <p class="text-center">
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4 me-md-2 fw-bold"><i class="bi bi-pencil-square"></i> Edit</button>
+                <button type="button" class="btn btn-outline-danger btn-lg px-4"><i class="bi bi-trash"></i> Delete</button>
+            </p>
+           </div>
+    </div>
+    <div class="row p-5 g-5 mt-5 m-2 align-items-center rounded-3 border shadow-lg">
+        <h2 class="text-center mt-0">Copies</h2>
+        <!--  TODO: Show copies as cards -->
+        <table>
+            <tr th:each="copy : ${book.copies}">
+                <td th:text="${copy.copyId}"></td>
+                <td th:if="${copy.available}">
+                    <a th:href="@{/copy/borrow/{copyId}(copyId=${copy.copyId})}">Borrow</a>
+                </td>
+                <td th:unless="${copy.available}">
+                    <a th:href="@{/copy/return/{copyId}(copyId=${copy.copyId})}">Return</a>
+                </td>
+            </tr>
+        </table>
+        <a th:href="@{/copy/new/{bookTitle}(bookTitle = ${book.title})}">Buy copy</a>
+    </div>
 
-    <h2>Authors</h2>
-    <!--  TODO: Show auhtors as cards -->
-    <ul>
-        <li th:each="author : ${book.authors}"><a th:href="@{/author/detail/{authorName}(authorName = ${author.name})}" th:text="${author.name}"></a></li>
-    </ul>
-
-    <h2>Actions</h2>
-    <ul>
-        <li><a th:href="@{/book/edit/{bookTitle}(bookTitle = ${book.title})}">Edit book</a></li>
-        <li><a th:href="@{/book/delete/{bookTitle}(bookTitle = ${book.title})}">Delete book</a></li>
-        <li><a th:href="@{/copy/new/{bookTitle}(bookTitle = ${book.title})}">Buy copy</a></li>
-    </ul>
-
-    <h2>Copies</h2>
-    <!--  TODO: Show copies as cards -->
-    <table>
-        <tr th:each="copy : ${book.copies}">
-            <td th:text="${copy.copyId}"></td>
-            <td th:if="${copy.available}">
-                <a th:href="@{/copy/borrow/{copyId}(copyId=${copy.copyId})}">Borrow</a>
-            </td>
-            <td th:unless="${copy.available}">
-                <a th:href="@{/copy/return/{copyId}(copyId=${copy.copyId})}">Return</a>
-            </td>
-        </tr>
-    </table>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

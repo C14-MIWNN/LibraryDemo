@@ -21,7 +21,9 @@ public class Author {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL) // Cancelling an author means cancelling all of their books?
+    private String imageUrl;
+
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER, cascade = CascadeType.ALL) // Cancelling an author means cancelling all of their books?
     private Set<Book> books;
 
     public Long getAuthorId() {
@@ -46,5 +48,13 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
