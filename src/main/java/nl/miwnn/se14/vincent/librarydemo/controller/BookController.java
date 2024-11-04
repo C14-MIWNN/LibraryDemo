@@ -46,6 +46,7 @@ public class BookController {
         }
 
         datamodel.addAttribute("book", bookOptional.get());
+        datamodel.addAttribute("allAuthors", authorRepository.findAll());
         return "bookDetails";
     }
 
@@ -66,17 +67,17 @@ public class BookController {
     }
 
     private String setupBookForm(Model datamodel, Book bookOptional) {
-        datamodel.addAttribute("formBook", bookOptional);
+        datamodel.addAttribute("book", bookOptional);
         datamodel.addAttribute("allAuthors", authorRepository.findAll());
 
         return "bookForm";
     }
 
     @PostMapping("/book/save")
-    private String saveBook(@ModelAttribute("formBook") @Valid Book bookToBeSaved, BindingResult result, Model datamodel) {
+    private String saveBook(@ModelAttribute("book") @Valid Book bookToBeSaved, BindingResult result, Model datamodel) {
         Optional<Book> sameName = bookRepository.findByTitle(bookToBeSaved.getTitle());
         if (sameName.isPresent() && !sameName.get().getBookId().equals(bookToBeSaved.getBookId())) {
-            result.addError(new FieldError("formBook", "title", "this title is already in use"));
+            result.addError(new FieldError("book", "title", "this title is already in use"));
         }
 
         if (result.hasErrors()) {

@@ -30,5 +30,65 @@
     </div>
 </div>
 
+<div th:fragment="bookForm(book, allAuthors, #fields)">
+    <form class="row g-3" th:action="@{/book/save}" method="post" th:object="${book}">
+        <input type="hidden" th:field="*{bookId}">
+        <div class="row g-3 align-items-center">
+            <div class="col-5">
+                <label for="title" class="col-form-label">Title</label>
+            </div>
+            <div class="col-7">
+                <input type="text" id="title" class="form-control" aria-describedby="titleHelpInline" th:field="*{title}">
+            </div>
+            <div class="col-12">
+                    <span id="titleHelpInline" class="form-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                    </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-5">
+                <label for="description" class="col-form-label">Description</label>
+            </div>
+            <div class="col-7">
+                <textarea id="description" class="form-control" aria-describedby="descriptionHelpInline" th:field="*{description}"></textarea>
+            </div>
+            <div class="col-12">
+                    <span id="descriptionHelpInline" class="form-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                    </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-5">
+                <label for="imageUrl" class="col-form-label">Image URL</label>
+            </div>
+            <div class="col-7">
+                <input type="url" id="imageUrl" class="form-control" aria-describedby="imageUrlHelpInline" th:field="*{imageUrl}">
+            </div>
+            <div class="col-12">
+                    <span id="imageUrlHelpInline" class="form-text" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">
+                    </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-5">
+                <label for="authors" class="col-form-label">Authors</label>
+            </div>
+            <div class="col-7">
+                <select id="authors" class="form-select" aria-describedby="authorHelpInline" th:field="*{authors}" multiple>
+                    <option th:each="authorOption : ${allAuthors}"
+                            th:text="${authorOption.name}"
+                            th:value="${authorOption.authorId}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-12">
+                    <span id="authorHelpInline" class="form-text" th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}">
+                    </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Save book</button>
+    </form>
+</div>
+
 </body>
 </html>

@@ -7,29 +7,29 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="container my-5">
+<div class="container my-5" th:object="${book}">
     <div class="row p-5 g-5 m-2 align-items-center rounded-3 border shadow-lg">
         <div class="col-4 mt-0">
-            <img class="img-fluid rounded overflow-hidden shadow-lg" th:src="${book.imageUrl}" th:alt="|Cover for ${book.title}|">
+            <img class="img-fluid rounded overflow-hidden shadow-lg" th:src="*{imageUrl}" th:alt="|Cover for *{title}|">
         </div>
         <div class="col-8 mt-0">
-            <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-center" th:text="${book.title}"></h1>
-            <div th:replace="~{fragments/author :: authorCards(${book.authors})}"></div>
-            <p class="lead" th:text="${book.description}"></p>
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-center" th:text="*{title}"></h1>
+            <div th:replace="~{fragments/author :: authorCards(*{authors})}"></div>
+            <p class="lead" th:text="*{description}"></p>
             <p class="text-center">
-                <a role="button"
+                <button type="button"
                    class="btn btn-outline-secondary btn-lg px-4 fw-bold"
-                   th:href="@{/book/edit/{bookTitle}(bookTitle = ${book.title})}">
+                    data-bs-toggle="modal" data-bs-target="#editForm">
                     <i class="bi bi-pencil-square"></i> Edit
-                </a>
+                </button>
                 <a role="button"
                    class="btn btn-outline-danger btn-lg px-4"
-                   th:href="@{/book/delete/{bookTitle}(bookTitle = ${book.title})}">
+                   th:href="@{/book/delete/{bookTitle}(bookTitle = *{title})}">
                     <i class="bi bi-trash"></i> Delete
                 </a>
                 <a role="button"
                    class="btn btn-outline-warning btn-lg px-4"
-                   th:href="@{/copy/new/{bookTitle}(bookTitle = ${book.title})}">
+                   th:href="@{/copy/new/{bookTitle}(bookTitle = *{title})}">
                     <i class="bi bi-cash"></i> Buy
                 </a>
             </p>
@@ -37,11 +37,26 @@
     </div>
     <div class="row p-5 g-5 mt-5 m-2 align-items-center rounded-3 border shadow-lg">
         <h2 class="text-center mt-0">Copies</h2>
-        <p class="text-center mt-0" th:text="|${book.numberOfAvailableCopies} available out of ${book.numberOfCopies} total copies.|"></p>
-        <div th:replace="~{fragments/copy :: copyCards(${book.copies})}"></div>
+        <p class="text-center mt-0" th:text="|*{numberOfAvailableCopies} available out of *{numberOfCopies} total copies.|"></p>
+        <div th:replace="~{fragments/copy :: copyCards(*{copies})}"></div>
     </div>
 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="editForm" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1 class="modal-title text-center" id="editFormModalLabel">Book edit form</h1>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div th:replace="~{fragments/book :: bookForm(${book}, ${allAuthors}, ${#fields})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomScripts}"></div>
