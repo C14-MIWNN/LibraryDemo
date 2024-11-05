@@ -3,7 +3,7 @@
 <body>
 
 <div th:fragment="copyCards(copies)" class="row row-cols-5 g-4 mt-1 align-items-center justify-content-center">
-    <div class="col mt-0" th:each="copy : ${copies}" th:include="~{:: copyCard(${copy})}"></div>
+    <div class="col mt-0" th:each="copy : ${copies}" th:insert="~{:: copyCard(${copy})}"></div>
 </div>
 
 <div th:fragment="copyCard(copy)">

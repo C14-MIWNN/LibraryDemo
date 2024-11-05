@@ -3,7 +3,7 @@
 <body>
 
 <div th:fragment="authorCards(authors)" class="row row-cols-2 g-4 mt-1 align-items-center justify-content-center">
-    <div class="col mt-0" th:each="author : ${authors}" th:include="~{:: authorCard(${author})}"></div>
+    <div class="col mt-0" th:each="author : ${authors}" th:insert="~{:: authorCard(${author})}"></div>
 </div>
 
 <div th:fragment="authorCard(author)">

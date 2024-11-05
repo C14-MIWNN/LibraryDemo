@@ -3,7 +3,7 @@
 <body>
 
 <div th:fragment="bookCards(books)" class="row row-cols-1 row-cols-md-6 g-4">
-    <div th:each="book : ${books}" th:include="~{:: bookCard(${book})}"></div>
+    <div th:each="book : ${books}" th:insert="~{:: bookCard(${book})}"></div>
 </div>
 
 <div th:fragment="bookCard(book)" class="col">
