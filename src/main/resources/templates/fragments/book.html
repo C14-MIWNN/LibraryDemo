@@ -30,8 +30,8 @@
     </div>
 </div>
 
-<div th:fragment="bookForm(book, allAuthors, #fields)">
-    <form class="row g-3" th:action="@{/book/save}" method="post" th:object="${book}">
+<div th:fragment="bookForm(formBook, allAuthors, #fields)">
+    <form class="row g-3" th:action="@{/book/save}" method="post" th:object="${formBook}">
         <input type="hidden" th:field="*{bookId}">
         <div class="row g-3 align-items-center">
             <div class="col-5">

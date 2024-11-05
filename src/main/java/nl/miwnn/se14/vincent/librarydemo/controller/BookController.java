@@ -46,7 +46,10 @@ public class BookController {
         }
 
         datamodel.addAttribute("book", bookOptional.get());
+        datamodel.addAttribute("formBook", bookOptional.get());
         datamodel.addAttribute("allAuthors", authorRepository.findAll());
+        datamodel.addAttribute("formModalHidden", true);
+
         return "bookDetails";
     }
 
@@ -74,15 +77,18 @@ public class BookController {
     }
 
     @PostMapping("/book/save")
-    private String saveBook(@ModelAttribute("book") @Valid Book bookToBeSaved, BindingResult result, Model datamodel) {
+    private String saveBook(@ModelAttribute("formBook") @Valid Book bookToBeSaved, BindingResult result, Model datamodel) {
         Optional<Book> sameName = bookRepository.findByTitle(bookToBeSaved.getTitle());
         if (sameName.isPresent() && !sameName.get().getBookId().equals(bookToBeSaved.getBookId())) {
             result.addError(new FieldError("book", "title", "this title is already in use"));
         }
 
-        if (result.hasErrors()) {
-            System.err.println(result.getAllErrors());
-            return setupBookForm(datamodel, bookToBeSaved);
+        if (result.hasErrors() && bookToBeSaved.getBookId() != null) {
+            datamodel.addAttribute("book", bookRepository.findById(bookToBeSaved.getBookId()).get());
+            datamodel.addAttribute("formBook", bookToBeSaved);
+            datamodel.addAttribute("allAuthors", authorRepository.findAll());
+            datamodel.addAttribute("formModalHidden", false);
+            return "bookDetails";
         }
 
         bookRepository.save(bookToBeSaved);
