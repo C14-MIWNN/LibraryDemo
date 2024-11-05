@@ -11,8 +11,6 @@
     <h1>Overview of all books in the Library</h1>
 
     <div th:replace="~{fragments/book :: bookCardsNew(${allBooks})}"></div>
-
-    <a th:href="@{/book/new}">Add a new book</a>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <body>
 
-<div th:fragment="bookCards(books)" class="row row-cols-1 row-cols-md-6 g-4" th>
+<div th:fragment="bookCards(books)" class="row row-cols-1 row-cols-md-6 g-4">
     <div th:each="book : ${books}" th:insert="~{:: bookCard(${book})}"></div>
 </div>
 

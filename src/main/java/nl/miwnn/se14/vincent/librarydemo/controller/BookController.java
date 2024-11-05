@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +29,27 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping({"/", "/book/overview"})
-    private String showBookOverview(Model datamodel) {
+    private String setupBookOverview(Model datamodel, Book formBook, boolean formModalHidden) {
         datamodel.addAttribute("allBooks", bookRepository.findAll());
-        datamodel.addAttribute("formBook", new Book());
+        datamodel.addAttribute("formBook", formBook);
         datamodel.addAttribute("allAuthors", authorRepository.findAll());
-        datamodel.addAttribute("formModalHidden", true);
+        datamodel.addAttribute("formModalHidden", formModalHidden);
 
         return "bookOverview";
+    }
+
+    private String setupBookDetail(Model datamodel, Book bookToShow, Book formBook, boolean formModalHidden) {
+        datamodel.addAttribute("book", bookToShow);
+        datamodel.addAttribute("formBook", formBook);
+        datamodel.addAttribute("allAuthors", authorRepository.findAll());
+        datamodel.addAttribute("formModalHidden", formModalHidden);
+
+        return "bookDetails";
+    }
+
+    @GetMapping({"/", "/book/overview"})
+    private String showBookOverview(Model datamodel) {
+        return setupBookOverview(datamodel, new Book(), true);
     }
 
     @GetMapping("/book/detail/{title}")
@@ -48,34 +60,7 @@ public class BookController {
             return "redirect:/book/overview";
         }
 
-        datamodel.addAttribute("book", bookOptional.get());
-        datamodel.addAttribute("formBook", bookOptional.get());
-        datamodel.addAttribute("allAuthors", authorRepository.findAll());
-        datamodel.addAttribute("formModalHidden", true);
-        return "bookDetails";
-    }
-
-    @GetMapping("/book/new")
-    private String showBookForm(Model datamodel) {
-        return setupBookForm(datamodel, new Book());
-    }
-
-    @GetMapping("/book/edit/{title}")
-    private String showBookEditPage(@PathVariable("title") String title, Model datamodel) {
-        Optional<Book> bookOptional = bookRepository.findByTitle(title);
-
-        if (bookOptional.isEmpty()) {
-            return "redirect:/book/overview";
-        }
-
-        return setupBookForm(datamodel, bookOptional.get());
-    }
-
-    private String setupBookForm(Model datamodel, Book bookOptional) {
-        datamodel.addAttribute("book", bookOptional);
-        datamodel.addAttribute("allAuthors", authorRepository.findAll());
-
-        return "bookForm";
+        return setupBookDetail(datamodel, bookOptional.get(), bookOptional.get(), true);
     }
 
     @PostMapping("/book/save")
@@ -86,17 +71,10 @@ public class BookController {
         }
 
         if (result.hasErrors() && bookToBeSaved.getBookId() != null) {
-            datamodel.addAttribute("book", bookRepository.findById(bookToBeSaved.getBookId()).get());
-            datamodel.addAttribute("formBook", bookToBeSaved);
-            datamodel.addAttribute("allAuthors", authorRepository.findAll());
-            datamodel.addAttribute("formModalHidden", false);
-            return "bookDetails";
+            Book originalBookDetails = bookRepository.findById(bookToBeSaved.getBookId()).orElse(new Book());
+            return setupBookDetail(datamodel, originalBookDetails, bookToBeSaved, false);
         } else if (result.hasErrors()) {
-            datamodel.addAttribute("allBooks", bookRepository.findAll());
-            datamodel.addAttribute("formBook", bookToBeSaved);
-            datamodel.addAttribute("allAuthors", authorRepository.findAll());
-            datamodel.addAttribute("formModalHidden", false);
-            return "bookOverview";
+            return setupBookOverview(datamodel, bookToBeSaved, false);
         }
 
         bookRepository.save(bookToBeSaved);
