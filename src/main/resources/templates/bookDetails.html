@@ -43,26 +43,9 @@
 
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="editForm" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <h1 class="modal-title text-center" id="editFormModalLabel">Book edit form</h1>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div th:replace="~{fragments/book :: bookForm(${formBook}, ${allAuthors}, ${#fields})}"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
-<script th:unless="${formModalHidden}">
-    new bootstrap.Modal(document.getElementById('editForm'), {}).toggle()
-</script>
-
+<div th:replace="~{fragments/book :: bookFormModal(${formBook}, ${allAuthors}, ${#fields})}"></div>
 </body>
 </html>

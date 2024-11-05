@@ -33,6 +33,9 @@ public class BookController {
     @GetMapping({"/", "/book/overview"})
     private String showBookOverview(Model datamodel) {
         datamodel.addAttribute("allBooks", bookRepository.findAll());
+        datamodel.addAttribute("formBook", new Book());
+        datamodel.addAttribute("allAuthors", authorRepository.findAll());
+        datamodel.addAttribute("formModalHidden", true);
 
         return "bookOverview";
     }
@@ -49,7 +52,6 @@ public class BookController {
         datamodel.addAttribute("formBook", bookOptional.get());
         datamodel.addAttribute("allAuthors", authorRepository.findAll());
         datamodel.addAttribute("formModalHidden", true);
-
         return "bookDetails";
     }
 
@@ -89,6 +91,12 @@ public class BookController {
             datamodel.addAttribute("allAuthors", authorRepository.findAll());
             datamodel.addAttribute("formModalHidden", false);
             return "bookDetails";
+        } else if (result.hasErrors()) {
+            datamodel.addAttribute("allBooks", bookRepository.findAll());
+            datamodel.addAttribute("formBook", bookToBeSaved);
+            datamodel.addAttribute("allAuthors", authorRepository.findAll());
+            datamodel.addAttribute("formModalHidden", false);
+            return "bookOverview";
         }
 
         bookRepository.save(bookToBeSaved);

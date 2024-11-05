@@ -2,8 +2,21 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <body>
 
-<div th:fragment="bookCards(books)" class="row row-cols-1 row-cols-md-6 g-4">
+<div th:fragment="bookCards(books)" class="row row-cols-1 row-cols-md-6 g-4" th>
     <div th:each="book : ${books}" th:insert="~{:: bookCard(${book})}"></div>
+</div>
+
+
+<div th:fragment="bookCardsNew(books)" class="row row-cols-1 row-cols-md-6 g-4">
+    <div th:each="book : ${books}" th:insert="~{:: bookCard(${book})}"></div>
+
+    <div th:if="newbook">
+        <button type="button"
+                class="btn btn-secondary btn-lg px-4 fw-bold"
+                data-bs-toggle="modal" data-bs-target="#editForm">
+            <i class="bi bi-plus-square"></i><br>Add Book
+        </button>
+    </div>
 </div>
 
 <div th:fragment="bookCard(book)" class="col">
@@ -88,6 +101,24 @@
         </div>
         <button type="submit" class="btn btn-primary mb-3">Save book</button>
     </form>
+</div>
+
+<!-- Modal -->
+<div th:fragment="bookFormModal(formBook, allAuthors, #fields)" class="modal fade" id="editForm" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1 class="modal-title text-center" id="editFormModalLabel">Book edit form</h1>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div th:replace="~{fragments/book :: bookForm(${formBook}, ${allAuthors}, ${#fields})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:unless="${formModalHidden}">
+        new bootstrap.Modal(document.getElementById('editForm'), {}).toggle()
+    </script>
 </div>
 
 </body>
