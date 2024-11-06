@@ -31,6 +31,7 @@ public class LibraryUserController {
     private String showUserOverview(Model datamodel) {
         datamodel.addAttribute("allUsers", libraryUserService.getAllUsers());
         datamodel.addAttribute("formUser", new LibraryUserDTO());
+        datamodel.addAttribute("formModalHidden", true);
 
         return "userOverview";
     }
@@ -48,6 +49,7 @@ public class LibraryUserController {
 
         if (result.hasErrors()) {
             datamodel.addAttribute("allUsers", libraryUserService.getAllUsers());
+            datamodel.addAttribute("formModalHidden", false);
             return "userOverview";
         }
 

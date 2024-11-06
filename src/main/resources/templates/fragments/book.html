@@ -110,7 +110,7 @@
             <h1 class="modal-title text-center" id="editFormModalLabel">Book edit form</h1>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div th:replace="~{fragments/book :: bookForm(${formBook}, ${allAuthors}, ${#fields})}"></div>
+                    <div th:replace="~{:: bookForm(${formBook}, ${allAuthors}, ${#fields})}"></div>
                 </div>
             </div>
         </div>
