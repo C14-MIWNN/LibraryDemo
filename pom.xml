@@ -88,6 +88,16 @@
 			<artifactId>bootstrap-icons</artifactId>
 			<version>1.11.3</version>
 		</dependency>
+
+		<!--	These dependencies are for security	-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

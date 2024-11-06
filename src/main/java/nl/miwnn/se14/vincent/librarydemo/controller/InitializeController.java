@@ -3,9 +3,12 @@ package nl.miwnn.se14.vincent.librarydemo.controller;
 import nl.miwnn.se14.vincent.librarydemo.model.Author;
 import nl.miwnn.se14.vincent.librarydemo.model.Book;
 import nl.miwnn.se14.vincent.librarydemo.model.Copy;
+import nl.miwnn.se14.vincent.librarydemo.model.LibraryUser;
 import nl.miwnn.se14.vincent.librarydemo.repositories.AuthorRepository;
 import nl.miwnn.se14.vincent.librarydemo.repositories.BookRepository;
 import nl.miwnn.se14.vincent.librarydemo.repositories.CopyRepository;
+import nl.miwnn.se14.vincent.librarydemo.repositories.LibraryUserRepository;
+import nl.miwnn.se14.vincent.librarydemo.service.LibraryUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
@@ -23,12 +26,17 @@ public class InitializeController {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final CopyRepository copyRepository;
+    private final LibraryUserService libraryUserService;
 
 
-    public InitializeController(AuthorRepository authorRepository, BookRepository bookRepository, CopyRepository copyRepository) {
+    public InitializeController(AuthorRepository authorRepository,
+                                BookRepository bookRepository,
+                                CopyRepository copyRepository,
+                                LibraryUserService libraryUserService) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
         this.copyRepository = copyRepository;
+        this.libraryUserService = libraryUserService;
     }
 
     @EventListener
@@ -39,6 +47,8 @@ public class InitializeController {
     }
 
     private void initializeDB() {
+        makeLibraryUser("Vincent", "Vincent");
+
         Author brandon = makeAuthor("Brandon Sanderson", "https://gamingbolt.com/wp-content/uploads/2021/12/Brandon-Sanderson.jpg");
         Author tolkien = makeAuthor("J.R.R. Tolkien", "https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg");
         Author patrick = makeAuthor("Patrick Rothfuss", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Patrick-rothfuss-2014-kyle-cassidy.jpg/500px-Patrick-rothfuss-2014-kyle-cassidy.jpg");
@@ -110,6 +120,14 @@ public class InitializeController {
 
     private Copy makeCopy(Book book) {
         return makeCopy(book, true);
+    }
+
+    private LibraryUser makeLibraryUser(String username, String password) {
+        LibraryUser user = new LibraryUser();
+        user.setUsername(username);
+        user.setPassword(password);
+        libraryUserService.save(user);
+        return user;
     }
 
 
