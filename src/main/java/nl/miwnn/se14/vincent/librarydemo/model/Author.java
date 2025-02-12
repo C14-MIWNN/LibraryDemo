@@ -2,7 +2,6 @@ package nl.miwnn.se14.vincent.librarydemo.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Set;
 
@@ -23,7 +22,7 @@ public class Author {
 
     private String imageUrl;
 
-    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER, cascade = CascadeType.ALL) // Cancelling an author means cancelling all of their books?
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "authors")
     private Set<Book> books;
 
     public Long getAuthorId() {

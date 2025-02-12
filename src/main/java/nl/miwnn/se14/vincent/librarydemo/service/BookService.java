@@ -8,11 +8,8 @@ import nl.miwnn.se14.vincent.librarydemo.viewmodel.BookDetailVM;
 import nl.miwnn.se14.vincent.librarydemo.viewmodel.BookOverviewVM;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
-import org.webjars.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,8 +43,7 @@ public class BookService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Title already exists");
         }
 
-        Book book = bookDetailMapper.fromVM(bookToBeSaved);
-        bookRepository.save(book);
+        bookRepository.save(bookDetailMapper.fromVM(bookToBeSaved));
     }
 
     public BookDetailVM delete(String title) {
@@ -64,6 +60,10 @@ public class BookService {
         if (!existingBook.getTitle().equals(bookToBeUpdated.getTitle())
                 && bookRepository.existsByTitle(bookToBeUpdated.getTitle())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Title already exists");
+        }
+
+        if (bookToBeUpdated.getDescription() != null) {
+            existingBook.setDescription(bookToBeUpdated.getDescription());
         }
 
         bookRepository.save(bookDetailMapper.fromVM(bookToBeUpdated));

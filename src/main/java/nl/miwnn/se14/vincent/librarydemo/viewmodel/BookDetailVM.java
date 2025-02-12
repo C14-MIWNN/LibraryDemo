@@ -1,10 +1,5 @@
 package nl.miwnn.se14.vincent.librarydemo.viewmodel;
 
-import nl.miwnn.se14.vincent.librarydemo.model.Copy;
-import nl.miwnn.se14.vincent.librarydemo.service.mappers.BookOverviewMapper;
-
-import java.util.Set;
-
 /**
  * @author Vincent Velthuizen
  * Give all information about a Book, but with references to other objects, instead of the full objects.

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
@@ -72,18 +71,18 @@ class BookDetailMapperTest {
     @Test
     void toVM_mapsAllFieldsCorrectly() {
         // Act
-        BookDetailVM result = bookDetailMapper.toVM(testBook);
+        BookDetailVM testBookVM = bookDetailMapper.toVM(testBook);
 
         // Assert
         assertAll(
-                () -> assertEquals(testBook.getBookId(), result.getId()),
-                () -> assertEquals(testBook.getTitle(), result.getTitle()),
-                () -> assertEquals(testBook.getDescription(), result.getDescription()),
-                () -> assertEquals(testBook.getImageUrl(), result.getImageUrl()),
-                () -> assertEquals(1, result.getAuthorIds().size()),
-                () -> assertTrue(result.getAuthorIds().contains(1L)),
-                () -> assertEquals(1, result.getCopyIds().size()),
-                () -> assertTrue(result.getCopyIds().contains(1L))
+                () -> assertEquals(testBook.getBookId(), testBookVM.getId()),
+                () -> assertEquals(testBook.getTitle(), testBookVM.getTitle()),
+                () -> assertEquals(testBook.getDescription(), testBookVM.getDescription()),
+                () -> assertEquals(testBook.getImageUrl(), testBookVM.getImageUrl()),
+                () -> assertEquals(1, testBookVM.getAuthorIds().size()),
+                () -> assertTrue(testBookVM.getAuthorIds().contains(1L)),
+                () -> assertEquals(1, testBookVM.getCopyIds().size()),
+                () -> assertTrue(testBookVM.getCopyIds().contains(2L))
         );
     }
 
@@ -91,7 +90,7 @@ class BookDetailMapperTest {
     void fromVM_mapsAllFieldsCorrectlyWhenIdsAreValid() {
         // Arrange
         when(authorRepository.findById(1L)).thenReturn(java.util.Optional.of(testAuthor));
-        when(copyRepository.findById(1L)).thenReturn(java.util.Optional.of(testCopy));
+        when(copyRepository.findById(2L)).thenReturn(java.util.Optional.of(testCopy));
 
         // Act
         Book result = bookDetailMapper.fromVM(testVM);
