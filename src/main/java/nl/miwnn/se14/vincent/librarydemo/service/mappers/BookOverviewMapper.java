@@ -5,7 +5,7 @@ import nl.miwnn.se14.vincent.librarydemo.model.Book;
 import nl.miwnn.se14.vincent.librarydemo.model.Copy;
 import nl.miwnn.se14.vincent.librarydemo.viewmodel.BookOverviewVM;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * @author Vincent Velthuizen
@@ -17,13 +17,13 @@ public class BookOverviewMapper {
 
         bookOverviewVM.setId(book.getBookId());
         bookOverviewVM.setTitle(book.getTitle());
-        bookOverviewVM.setAuthors(new ArrayList<>());
+        bookOverviewVM.setAuthorIds(new HashSet<>());
         for (Author author : book.getAuthors()) {
-            bookOverviewVM.getAuthors().add(author.getAuthorId());
+            bookOverviewVM.getAuthorIds().add(author.getAuthorId());
         }
-        bookOverviewVM.setCopies((new ArrayList<>()));
+        bookOverviewVM.setCopyIds((new HashSet<>()));
         for (Copy copy : book.getCopies()) {
-            bookOverviewVM.getCopies().add(copy.getCopyId());
+            bookOverviewVM.getCopyIds().add(copy.getCopyId());
         }
 
         return bookOverviewVM;

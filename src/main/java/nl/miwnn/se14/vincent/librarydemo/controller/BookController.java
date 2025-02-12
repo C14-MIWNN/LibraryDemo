@@ -1,23 +1,11 @@
 package nl.miwnn.se14.vincent.librarydemo.controller;
 
-import jakarta.validation.Valid;
-import nl.miwnn.se14.vincent.librarydemo.model.Book;
-import nl.miwnn.se14.vincent.librarydemo.repositories.AuthorRepository;
-import nl.miwnn.se14.vincent.librarydemo.repositories.BookRepository;
 import nl.miwnn.se14.vincent.librarydemo.service.BookService;
 import nl.miwnn.se14.vincent.librarydemo.viewmodel.BookDetailVM;
 import nl.miwnn.se14.vincent.librarydemo.viewmodel.BookOverviewVM;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Velthuizen
@@ -40,5 +28,20 @@ public class BookController {
     @GetMapping("book/{title}")
     public BookDetailVM getBook(@PathVariable("title") String title) {
         return bookService.getBook(title);
+    }
+
+    @DeleteMapping("book/{title}")
+    public BookDetailVM deleteBook(@PathVariable("title") String title) {
+        return bookService.delete(title);
+    }
+
+    @PostMapping("book/save")
+    public void saveNewBook(@ModelAttribute("book") BookDetailVM bookToBeSaved) {
+        bookService.save(bookToBeSaved);
+    }
+
+    @PutMapping("book/update")
+    public void updateBook(@ModelAttribute("book") BookDetailVM bookToBeUpdated) {
+        bookService.update(bookToBeUpdated);
     }
 }

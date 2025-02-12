@@ -1,6 +1,6 @@
 package nl.miwnn.se14.vincent.librarydemo.viewmodel;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Vincent Velthuizen
@@ -9,8 +9,8 @@ import java.util.List;
 public class BookOverviewVM {
     Long id;
     String title;
-    List<Long> authors;
-    List<Long> copies;
+    Set<Long> authorIds;
+    Set<Long> copyIds;
 
     public Long getId() {
         return id;
@@ -28,19 +28,19 @@ public class BookOverviewVM {
         this.title = title;
     }
 
-    public List<Long> getAuthors() {
-        return authors;
+    public Set<Long> getAuthorIds() {
+        return authorIds;
     }
 
-    public void setAuthors(List<Long> authors) {
-        this.authors = authors;
+    public void setAuthorIds(Set<Long> authorIds) {
+        this.authorIds = authorIds;
     }
 
-    public List<Long> getCopies() {
-        return copies;
+    public Set<Long> getCopyIds() {
+        return copyIds;
     }
 
-    public void setCopies(List<Long> copies) {
-        this.copies = copies;
+    public void setCopyIds(Set<Long> copyIds) {
+        this.copyIds = copyIds;
     }
 }
